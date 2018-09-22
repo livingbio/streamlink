@@ -951,6 +951,9 @@ def setup_logging(stream=sys.stdout, level="info"):
 
 
 def main():
+    import django
+    django.setup()
+
     error_code = 0
     parser = build_parser()
 
