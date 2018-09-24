@@ -27,6 +27,11 @@ deps = [
     'backports.shutil_get_terminal_size;python_version<"3.3"'
 ]
 
+deps += [
+    'Django==1.11',
+    'gffmpeg',
+]
+
 # for encrypted streams
 if environ.get("STREAMLINK_USE_PYCRYPTO"):
     deps.append("pycrypto")
