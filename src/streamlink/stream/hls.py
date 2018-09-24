@@ -103,6 +103,7 @@ class HLSStreamWriter(SegmentedStreamWriter):
                 log.debug("Skipping segment {0}".format(sequence.num))
                 return
 
+            log.debug("fetch Segment URI {}".format(sequence.segment.uri))
             return self.session.http.get(sequence.segment.uri,
                                          timeout=self.timeout,
                                          exception=StreamError,

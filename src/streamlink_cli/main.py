@@ -8,8 +8,12 @@ from gettext import gettext
 
 import requests
 import sys
+import time
 import signal
 import webbrowser
+
+import django
+django.setup()
 
 from contextlib import closing
 from distutils.version import StrictVersion
@@ -297,6 +301,17 @@ def output_stream(plugin, stream):
 
     if not success_open:
         console.exit("Could not open stream {0}, tried {1} times, exiting", stream, args.retry_open)
+
+    if args.gliavideoid:
+        log.info('--gliavideoid argument won\'t pass stream to any file/player')
+        try:
+            while True:
+                time.sleep(1)
+        except Exception as e:
+            log.error('gliavideoid mode exit since exception:')
+            log.error(e)
+        finally:
+            return True
 
     output = create_output(plugin)
 
@@ -951,8 +966,6 @@ def setup_logging(stream=sys.stdout, level="info"):
 
 
 def main():
-    import django
-    django.setup()
 
     error_code = 0
     parser = build_parser()

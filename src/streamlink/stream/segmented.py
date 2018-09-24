@@ -1,10 +1,16 @@
 import concurrent.futures.thread
 import logging
+import os
 from concurrent import futures
 from threading import Thread, Event
 
+from streamlink_cli import main
+
+from video.models import Video
+
 from .stream import StreamIO
 from ..buffers import RingBuffer
+from ..utils import gliadb
 from ..compat import queue
 
 log = logging.getLogger(__name__)
@@ -145,6 +151,12 @@ class SegmentedStreamWriter(Thread):
         pass
 
     def run(self):
+        video_id = main.args.gliavideoid
+        if video_id:
+            video = Video.objects.get(id=video_id)
+            if not os.path.exists(video.cache_dir):
+                os.makedirs(video.cache_dir)
+
         while not self.closed:
             try:
                 segment, future = self.futures.get(block=True, timeout=0.5)
@@ -164,6 +176,9 @@ class SegmentedStreamWriter(Thread):
                     break
 
                 if result is not None:
+                    if main.args.gliavideoid:
+                        gliadb.save(segment, result, video)
+
                     self.write(segment, result)
 
                 break
