@@ -1,0 +1,3 @@
+[submodule "src/highlight"]
+	path = src/highlight
+	url = https://github.com/livingbio/highlight.git
