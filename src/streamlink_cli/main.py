@@ -8,7 +8,6 @@ from gettext import gettext
 
 import requests
 import sys
-import time
 import signal
 import webbrowser
 

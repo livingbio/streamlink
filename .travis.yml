@@ -1,4 +1,6 @@
 language: python
+git:
+  submodules: false
 env:
   global:
   - STREAMLINK_DIST_DIR=${TRAVIS_BUILD_DIR}/dist
