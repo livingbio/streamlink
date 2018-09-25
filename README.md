@@ -1,3 +1,20 @@
+# Streamlink-fork
+
+streaming client for highlight.
+
+## Prepare environment
+```bash
+sh submodule-update.sh
+pip install .
+export DJANGO_SETTINGS_MODULE=app.nogpu
+```
+
+## Test
+```bash
+streamlink http://wpdtpush.winpowerdata.com.cn/ai/test01.m3u8 best --retry-max 3 --stream-segment-threads 3 --gliavideoid 161 -o /dev/null
+```
+`--gliavideoid` is a new argument that will store clips belong to that  video.
+
 # [Streamlink][streamlink-website]
 
 [![TravisCI build status][travisci-build-status-badge]][travisci-build-status]
