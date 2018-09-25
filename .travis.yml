@@ -6,6 +6,7 @@ env:
   - STREAMLINK_DIST_DIR=${TRAVIS_BUILD_DIR}/dist
   - STREAMLINK_INSTALLER_DIST_DIR=${STREAMLINK_DIST_DIR}/nsis
   - SDIST_KEY_FILE="${TRAVIS_BUILD_DIR}/signing.key"
+  - PIP_EXTRA_INDEX_URL=https://gliacloud:cookiebank@pypi-dot-living-bio.appspot.com/pypi
 
 matrix:
   include:
