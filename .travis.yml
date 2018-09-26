@@ -1,12 +1,11 @@
 language: python
-git:
-  submodules: false
 env:
   global:
   - STREAMLINK_DIST_DIR=${TRAVIS_BUILD_DIR}/dist
   - STREAMLINK_INSTALLER_DIST_DIR=${STREAMLINK_DIST_DIR}/nsis
   - SDIST_KEY_FILE="${TRAVIS_BUILD_DIR}/signing.key"
   - PIP_EXTRA_INDEX_URL=https://gliacloud:cookiebank@pypi-dot-living-bio.appspot.com/pypi
+  - DJANGO_SETTINGS_MODULE=app.nogpu
 
 matrix:
   include:
@@ -25,6 +24,7 @@ matrix:
   - python: '3.8-dev'
 
 before_install:
+  - cp -r src/highlight/src/app src/highlight/src/soccer src/highlight/src/studio src/highlight/src/video src/
   - pip install --disable-pip-version-check --upgrade pip setuptools
   - pip install -r dev-requirements.txt
   - pip install pycountry
