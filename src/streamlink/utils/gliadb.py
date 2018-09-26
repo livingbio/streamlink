@@ -4,6 +4,7 @@ import logging
 import tempfile
 
 from django.core.files.base import File
+from pytimeparse.timeparse import timeparse
 
 import gffmpeg
 
@@ -11,7 +12,7 @@ from video.models import Clip, Image
 
 log = logging.getLogger(__name__)
 
-re_offset = re.compile(r', start: (?P<offset>[\d\.]+),')
+re_offset = re.compile(r'Duration: (?P<duration>[\d:\.]+), start: (?P<offset>[\d\.]+),')
 
 
 def save(sequence, result, video_obj):
@@ -25,8 +26,10 @@ def save(sequence, result, video_obj):
     with open(ts_filepath, 'wb') as f:
         f.write(result.content)
 
-    offset = get_offset(ts_filepath)
-    if not offset:  # skip if no offset detect.
+    ts_info = get_ts_info(ts_filepath)
+    offset = ts_info['offset']
+    duration = ts_info['duration']
+    if not offset or not duration:  # skip if no offset/duration detect.
         return
 
     # save clips
@@ -66,11 +69,16 @@ def save(sequence, result, video_obj):
     os.remove(ts_filepath)  # cleanup
 
 
-def get_offset(filepath):
+def get_ts_info(filepath):
     message = gffmpeg.execute(['ffmpeg', '-i', filepath], ignore_error=True)
     match = re.search(re_offset, message)
     if not match:
         return None
 
     offset = match.group('offset')
-    return float(offset)
+    duration = match.group('duration')
+
+    return {
+        'offset': float(offset),
+        'duration': timeparse(duration),
+    }

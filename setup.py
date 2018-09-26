@@ -27,9 +27,11 @@ deps = [
     'backports.shutil_get_terminal_size;python_version<"3.3"'
 ]
 
+# For GliaCloud
 deps += [
     'Django==1.11',
     'gffmpeg',
+    'pytimeparse',
 ]
 
 # for encrypted streams
