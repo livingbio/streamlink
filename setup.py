@@ -29,7 +29,7 @@ deps = [
 
 # For GliaCloud
 deps += [
-    'Django==1.11',
+    'Django',
     'gffmpeg',
     'pytimeparse',
 ]

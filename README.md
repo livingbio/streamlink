@@ -3,11 +3,16 @@
 streaming client for highlight.
 
 ## Prepare environment
+
+Requirement: **Python3**
+
 ```bash
 sh submodule-update.sh
 pip install .
 export DJANGO_SETTINGS_MODULE=app.nogpu
 ```
+
+And last, make sure you can connect to Database.
 
 ## Test
 ```bash
